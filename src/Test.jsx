@@ -4,39 +4,44 @@ export default class Test extends React.Component {
   render() {
     return (
       <ul>
-        <TestSimple />
-        <TestUpdate />
+        <TestOne />
+        <TestTwo />
       </ul>
     );
   }
 };
 
-class TestSimple extends React.Component {
-  render() {
-    return (<li>TestSimple</li>);
-  }
-};
 
-class TestUpdate extends React.Component {
+class TestOne extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      total: 0
+      url: ''
     };
+
+    this.links = [
+      'http://www.yld.io',
+      'http://blog.yld.io'
+    ];
   }
 
-  add() {
+  tick() {
     this.setState({
-      total: this.state.total + 1
+      url: this.links[Math.floor(Math.random() * 2)]
     });
   }
 
+  componentDidMount() {
+    setInterval(this.tick.bind(this), 50);
+  }
+
   render() {
-    return (
-      <li>
-        TestUpdate ({this.state.total}) 
-        <button onClick={this.add.bind(this)}>Add</button>
-      </li>
-    );
+    return (<li>{this.state.url}</li>);
+  }
+};
+
+class TestTwo extends React.Component {
+  render() {
+    return (<li>TestTwo</li>);
   }
 };
